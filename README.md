@@ -34,13 +34,16 @@ Duality Namespace Usage
 -------------------
 1. App
 1. Service\Server
-1. Structure\Http\Request
-1. Structure\Http\Response
 1. Service\Controller\Base
 1. Service\Session
 1. Service\Database
+1. Service\Validator
+1. Structure\Http\Request
+1. Structure\Http\Response
 1. Structure\Database\Table
 1. Structure\Database\Filter
+1. Structure\RuleItem
+1. Structure\Entity
 
 How to Install
 --------------
