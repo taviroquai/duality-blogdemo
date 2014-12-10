@@ -10,13 +10,6 @@ require_once './src/autoload.php';
 // Define local configuration
 return array(
 
-    // Localization configuration
-    'locale' => array(
-        'default'   => 'en_US',
-        'dir'       => './data/lang',
-        'timezone'  => 'Europe/Lisbon'
-    ),
-
     // Logger Example: $app->call('logger')->log('My message!');
     'logger'    => array(
         'buffer'    => './data/logs.txt'
@@ -29,40 +22,8 @@ return array(
         'pass'      => 'toor',
         'schema'    => 'data/schema.php'
     ),
-
-    // Security Example: $password = $app->encrypt('password');
-    'security'	=> array(
-        'salt'  => 'secret!',
-        'hash'  => 'sha256'
-    ),
-
-    /* Mailer SMTP Example: 
-     * $app->call('mailer')
-     *	->to('address@mail.com')
-     * 	->subject('Test')
-     *	->body('<p>OK!</p>')
-     *	->send(function($result) { echo $result; });
-     */
-    'mailer'	=> array(
-        'from'	=> array('email' => 'no-reply@domain.com', 'name' => 'Duality Mailer'),
-        'smtp'	=> array(
-            'host' => 'smtp.gmail.com',
-            'user' => 'username',
-            'pass' => 'password',
-            'encr' => 'tls',
-            'port' => 587,
-            'dbgl' => 0
-        )
-    ),
-
-    // Remote Example: php cmd.php ssh:localhost:ls
-    'remote' 	=> array(
-        'localhost'	=> array(
-            'username'	=> '',
-            'password'	=> ''
-        )
-    ),
     
+    // Use native PHP sessions
     'services'  => array(
         'session' => '\Duality\Service\Session\Native'
     )
