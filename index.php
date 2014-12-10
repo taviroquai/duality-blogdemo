@@ -5,6 +5,7 @@ $config = include_once('./config/app.php');
 
 // What will we use in our application?
 use Duality\App;
+use Blog\Model\MyUser;
 use Blog\Model\Post;
 
 // Create application container
@@ -15,6 +16,13 @@ $app = new App(dirname(__FILE__), $config);
  */
 $app->register('post', function() use ($app) {
     return new Post($app);
+});
+
+/**
+ * Register user model
+ */
+$app->register('user', function() use ($app) {
+    return new MyUser($app);
 });
 
 /**
@@ -42,6 +50,9 @@ $server->setRequest($request);
 // Set demo routes
 $server->setHome('\Blog\Controller\Welcome@doIndex');
 $server->addRoute('/^\/([0-9]+)$/', '\Blog\Controller\Welcome@doPost');
+$server->addRoute('/^\/login$/', '\Blog\Controller\AdminController@showAuthForm');
+$server->addRoute('/^\/login\/submit$/', '\Blog\Controller\AdminController@doLogin');
+$server->addRoute('/^\/logout$/', '\Blog\Controller\AdminController@doLogout');
 $server->addRoute('/^\/admin$/', '\Blog\Controller\AdminController@doIndex');
 $server->addRoute('/^\/admin\/edit\/([0-9]+)$/', '\Blog\Controller\AdminController@doPostEdit');
 $server->addRoute('/^\/admin\/save\/([0-9]+)$/', '\Blog\Controller\AdminController@doPostSave');

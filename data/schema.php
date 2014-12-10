@@ -9,6 +9,11 @@ return array(
             'updated_at'    => 'datetime',
             'body'          => 'text',
             'published'     => 'int(1)'
+        ),
+        'users' => array(
+            'id'    => 'auto',
+            'email' => 'varchar(60)',
+            'pass'  => 'varchar(255)'
         )
     ),
     'update' => array(
@@ -21,6 +26,10 @@ return array(
             'title' => 'First post',
             'body'  => '<p>First post</p>',
             'published' => 1
+        )),
+        array('table' => 'users', 'values' => array(
+            'email' => 'admin@isp.com',
+            'pass'  => 'admin::hash'
         ))
     )
 );

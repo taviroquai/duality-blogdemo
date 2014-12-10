@@ -27,6 +27,7 @@ class Home
         // Get services
         $server = $this->app->call('server');
         $session = $this->app->call('session');
+        $auth = $this->app->call('auth');
         
         // Default navigation
         $this->navigation = array(
@@ -39,6 +40,7 @@ class Home
         
         // Set defaults
         $this->template = 'home.html';
+        $this->data->assign('isLogged',     $auth->isLogged());
         $this->data->assign('url',          $server->createUrl('/'));
         $this->data->assign('title',        'Duality Blog!');
         $this->data->assign('description',  'Duality Blog description');
@@ -48,6 +50,7 @@ class Home
         
         // Get flash messages
         $this->data->assign('info', $session->take('info'));
+        $this->data->assign('error', $session->take('error'));
         $this->data->assign('errors', $session->take('errors'));
     }
     

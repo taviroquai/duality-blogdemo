@@ -23,6 +23,19 @@ return array(
         'schema'    => 'data/schema.php'
     ),
     
+    // Security Example: $password = $app->encrypt('password');
+    'security'	=> array(
+        'salt'  => 'secret!',
+        'hash'  => 'sha256'
+    ),
+    
+    // Auth configuration
+    'auth' => array(
+        'table' => 'users',
+        'user'  => 'email',
+        'pass'  => 'pass'
+    ),
+    
     // Use native PHP sessions
     'services'  => array(
         'session' => '\Duality\Service\Session\Native'

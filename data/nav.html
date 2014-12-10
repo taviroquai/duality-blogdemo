@@ -7,6 +7,11 @@
                     <a href="{$item.url}">{$item.link}</a>
                 </li>
                 {/foreach}
+                {if $isLogged}
+                <li>
+                    <a href="{$url}logout">Logout</a>
+                </li>
+                {/if}
             </ul>
         </div>
     </div>

@@ -7,10 +7,10 @@
         <div class="navbar">
             <ul class="nav nav-pills">
                 <?php 
-$_fh1_data = (isset($this->scope["mainNav"]["items"]) ? $this->scope["mainNav"]["items"]:null);
-if ($this->isTraversable($_fh1_data) == true)
+$_fh0_data = (isset($this->scope["mainNav"]["items"]) ? $this->scope["mainNav"]["items"]:null);
+if ($this->isTraversable($_fh0_data) == true)
 {
-	foreach ($_fh1_data as $this->scope['item'])
+	foreach ($_fh0_data as $this->scope['item'])
 	{
 /* -- foreach start output */
 ?>
@@ -23,6 +23,15 @@ if ($this->isTraversable($_fh1_data) == true)
                 <?php 
 /* -- foreach end output */
 	}
+}?>
+
+                <?php if ((isset($this->scope["isLogged"]) ? $this->scope["isLogged"] : null)) {
+?>
+
+                <li>
+                    <a href="<?php echo $this->scope["url"];?>logout">Logout</a>
+                </li>
+                <?php 
 }?>
 
             </ul>

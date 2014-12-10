@@ -24,13 +24,38 @@ extends Base
 	 * Here you can use filters or register common operations
 	 */
 	public function init()
-	{
+	{   
 		/**
 		 * Example of a native template system
 		 * Set homepage document (from file template)
 		 */
 		$this->view = new Admin($this->app);
 	}
+    
+    /**
+     * Checks if user is valid
+     * 
+     * @param Response $res The server response
+     * 
+     * @return boolean The result
+     */
+    public function validateUser(Response &$res)
+    {
+        /**
+         * Check if user is authenticated
+         */
+        $auth = $this->app->getAuth();
+        if (!$auth->isLogged()) {
+            
+            // Set redirect
+            $server = $this->app->call('server');
+            $res = $server->createRedirect('/login');
+            return false;
+        }
+        
+        // OK!
+        return true;
+    }
 
 	/**
 	 * Run request to get homepage
@@ -40,12 +65,100 @@ extends Base
      * @param array                            $params The uri params
 	 */
 	public function doIndex(Request &$req, Response &$res, $params = array())
-	{   
+	{
+        // Check valid user
+        if (!$this->validateUser($res)) {
+            return $res;
+        }
+        
 		// Load posts
         $this->view->loadPosts();
 
 		// Set response
 		$res->setContent($this->view->render());
+	}
+    
+    /**
+	 * Run request to get auth page
+	 * 
+	 * @param \Duality\Structure\Http\Request  $req    The HTTP request
+	 * @param \Duality\Structure\Http\Response $res    The HTTP response
+     * @param array                            $params The uri params
+	 */
+	public function showAuthForm(Request &$req, Response &$res, $params = array())
+	{
+        // Load services
+        $server = $this->app->call('server');
+        $session = $this->app->getSession();
+        
+        // Check valid user
+        if (!$session->has('logged')) {
+            
+            // Set response
+            $this->view->loadAuthForm($req->getParams());
+            $res->setContent($this->view->render());
+        } else {
+            
+            // Set redirect
+            $res = $server->createRedirect();
+        }
+	}
+    
+    /**
+	 * Submit login
+	 * 
+	 * @param \Duality\Structure\Http\Request  $req    The HTTP request
+	 * @param \Duality\Structure\Http\Response $res    The HTTP response
+     * @param array                            $params The uri params
+	 */
+	public function doLogin(Request &$req, Response &$res, $params = array())
+	{
+        // Load services
+        $server = $this->app->call('server');
+        $session = $this->app->call('session');
+        $auth = $this->app->call('auth');
+        $model = $this->app->call('user');
+        
+        // Validate input
+        if (!$model->validate($req->getParams())) {
+            
+            $res = $server->createRedirect('/login');
+        } else {
+
+            // Login or redirect
+            var_dump($req->getParam('pass'));
+            $pass = $this->app->getSecurity()->encrypt($req->getParam('pass'));
+            if (!$auth->login($req->getParam('email'), $pass)) {
+
+                // Back to form
+                $session->set('error', 'Email/password do not authenticate');
+                $session->set('inputAuth', $req->getParams());
+                $res = $server->createRedirect('/login');
+            } else {
+
+                // OK!
+                $session->set('logged', $req->getParam('email'));
+                $res = $server->createRedirect('/admin');
+            }
+        }
+	}
+    
+    /**
+	 * Logout
+	 * 
+	 * @param \Duality\Structure\Http\Request  $req    The HTTP request
+	 * @param \Duality\Structure\Http\Response $res    The HTTP response
+     * @param array                            $params The uri params
+	 */
+	public function doLogout(Request &$req, Response &$res, $params = array())
+	{
+        // Load services
+        $server = $this->app->call('server');
+        $auth = $this->app->getAuth();
+        
+        // Logout
+        $auth->logout();
+		$res = $server->createRedirect();
 	}
     
     /**
@@ -56,7 +169,12 @@ extends Base
      * @param array                            $params The uri params
 	 */
 	public function doPostEdit(Request &$req, Response &$res, $params = array())
-	{   
+	{
+        // Check valid user
+        if (!$this->validateUser($res)) {
+            return $res;
+        }
+        
 		// Load form data
         $this->view->loadPostForm($params[0]);
         
@@ -72,7 +190,12 @@ extends Base
      * @param array                            $params The uri params
 	 */
 	public function doPostSave(Request &$req, Response &$res, $params = array())
-	{   
+	{
+        // Check valid user
+        if (!$this->validateUser($res)) {
+            return $res;
+        }
+        
 		// Default redirect
         $location = '/admin';
         
@@ -96,6 +219,11 @@ extends Base
 	 */
 	public function doPostDel(Request &$req, Response &$res, $params = array())
 	{
+        // Check valid user
+        if (!$this->validateUser($res)) {
+            return $res;
+        }
+        
         // Delete post
         $model = $this->app->call('post');
         $model->delete($params[0]);
