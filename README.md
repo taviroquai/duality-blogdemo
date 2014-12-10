@@ -40,6 +40,7 @@ Duality Namespace Usage
 1. Service\Session
 1. Service\Database
 1. Structure\Database\Table
+1. Structure\Database\Filter
 
 How to Install
 --------------
