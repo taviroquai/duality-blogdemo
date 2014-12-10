@@ -1,0 +1,13 @@
+    {if $mainNav}
+    <div class="row">
+        <div class="navbar">
+            <ul class="nav nav-pills">
+                {foreach $mainNav.items item}
+                <li {if $item.url == $mainNav.active}class="active"{/if}>
+                    <a href="{$item.url}">{$item.link}</a>
+                </li>
+                {/foreach}
+            </ul>
+        </div>
+    </div>
+    {/if}

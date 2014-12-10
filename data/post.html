@@ -1,0 +1,24 @@
+{extends "template.html"}
+
+{block "title"}{$post.title}{/block}
+{block "description"}{$post.resume}{/block}
+{block "keywords"}{$post.keywords}{/block}
+{block "author"}{$post.author}{/block}
+
+{block "content"}
+    
+    <div class="row">
+        <div class="col col-sm-12 col-md-12 col-lg-6">
+            <h2>{$post.title}</h2>
+            <div class="well pull-right">
+                <span class="label label-info">{$post.author}</span>
+                <span class="label label-info">{$post.updated_at}</span>
+            </div>
+            <div class="clearfix"></div>
+            <div>
+                {$post.body}
+            </div>
+        </div>
+    </div>
+    
+{/block}

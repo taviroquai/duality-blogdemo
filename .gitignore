@@ -1,0 +1,7 @@
+/vendor
+composer.lock
+.DS_Store
+Thumbs.db
+duality-demo.sublime-project
+duality-demo.sublime-workspace
+/nbproject

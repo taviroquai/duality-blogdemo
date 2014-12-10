@@ -1,0 +1,13 @@
+{
+    "name": "mafonso/duality-demo",
+    "authors": [
+        {
+            "name": "Marco Afonso",
+            "email": "mafonso333@gmail.com"
+        }
+    ],
+    "require": {
+    	"taviroquai/duality": "v1.0.0",
+        "dwoo/dwoo": "dev-beta"
+    }
+}

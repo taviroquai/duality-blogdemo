@@ -1,0 +1,72 @@
+{extends "admin.html"}
+
+{block "content"}
+    
+    {if $formPost}
+    <div class="row">
+        <div class="col col-sm-12 col-md-12 col-lg-6">
+            <h2>{if $formPost.id}Edit{else}Create{/if} Post</h2>
+            <form method="post" action="{$saveUrl}" id="postform">
+                
+                <input name="id" value="{$formPost.id}" type="hidden" />
+                
+                <div class="form-group {if $errors.title}has-error{/if}">
+                    <label>Title</label>
+                    <input type="text" class="form-control" name="title" 
+                           value="{$formPost.title}"
+                           placeholder="Insert post title" />
+                    {if $errors.title}
+                    <span class="help-block">{$errors.title}</span>
+                    {/if}
+                </div>
+                <div class="form-group">
+                    <label>Author</label>
+                    <input type="text" class="form-control" name="author" 
+                           value="{$formPost.author}"
+                           placeholder="Insert post author" />
+                </div>
+                <div class="form-group {if $errors.resume}has-error{/if}">
+                    <label>Resume</label>
+                    <input type="text" class="form-control" name="resume" 
+                           value="{$formPost.resume}"
+                           placeholder="Insert post resume" />
+                    {if $errors.resume}
+                    <span class="help-block">{$errors.resume}</span>
+                    {/if}
+                </div>
+                <div class="form-group {if $errors.keywords}has-error{/if}">
+                    <label>Keywords</label>
+                    <input type="text" class="form-control" name="keywords" 
+                           value="{$formPost.keywords}"
+                           placeholder="Insert post keywords" />
+                    {if $errors.keywords}
+                    <span class="help-block">{$errors.keywords}</span>
+                    {/if}
+                </div>
+                <div class="form-group {if $errors.body}has-error{/if}">
+                    <label>Body</label>
+                    <textarea class="form-control" rows="5" name="body" 
+                        placeholder="Insert post body">{$formPost.body}</textarea>
+                    {if $errors.body}
+                    <span class="help-block">{$errors.body}</span>
+                    {/if}
+                </div>
+                <div class="form-group">
+                    <label>Published</label>
+                    <label class="radio-inline">
+                        <input type="radio" name="published" value="0" {if !$formPost.published}checked{/if}> No
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="published" value="1" {if $formPost.published}checked{/if}> Yes
+                    </label>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary">Save</button>
+                    <a class="btn btn-danger" href="javascript: history.back()">Back</a>
+                </div>
+            </form>   
+        </div>
+    </div>
+    {/if}
+    
+{/block}

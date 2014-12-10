@@ -1,0 +1,21 @@
+{extends "template.html"}
+
+{block "content"}
+
+    <div class="row">
+        <div class="col col-sm-12 col-md-12 col-lg-6">
+            {foreach $posts item}
+            <h2><a href="{$url}{$item.id}">{$item.title}</a></h2>
+            <div class="well pull-right">
+                <span class="label label-info">{$item.author}</span>
+                <span class="label label-info">{$item.updated_at}</span>
+            </div>
+            <div class="clearfix"></div>
+            <div>
+                {$item.body}
+            </div>
+            {/foreach}
+        </div>
+    </div>
+    
+{/block}
