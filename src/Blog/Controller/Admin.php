@@ -5,12 +5,12 @@ namespace Blog\Controller;
 use Duality\Structure\Http\Request;
 use Duality\Structure\Http\Response;
 use Duality\Service\Controller\Base;
-use Blog\View\Admin;
+use Blog\View\Admin as AdminView;
 
 /**
- * The home controller
+ * The admin controller
  */
-class AdminController
+class Admin
 extends Base
 {
     /**
@@ -29,7 +29,7 @@ extends Base
 		 * Example of a native template system
 		 * Set homepage document (from file template)
 		 */
-		$this->view = new Admin($this->app);
+		$this->view = new AdminView($this->app);
 	}
     
     /**
