@@ -91,20 +91,4 @@ class Admin extends Home
         $this->data->assign('formComment', $comment);
     }
     
-    /**
-     * Loads the authentication form
-     * 
-     * @param array $input The user input
-     */
-    public function loadAuthForm($input)
-    {
-        // Set defaults
-        $this->template = 'formauth.html';
-        
-        // Set URLs
-        $server = $this->app->call('server');
-        $this->data->assign('loginUrl', $server->createUrl('/login/submit'));
-        $this->data->assign('formAuth', $input);
-    }
-    
 }

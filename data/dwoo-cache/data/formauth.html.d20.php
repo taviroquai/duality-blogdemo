@@ -1,8 +1,8 @@
 <?php
 /* template head */
 /* end template head */ ob_start(); /* template body */ ;
-// checking for modification in file:data/admin.html
-if (!("1418181697" == filemtime('data/admin.html'))) { ob_end_clean(); return false; };
+// checking for modification in file:data/home.html
+if (!("1418181014" == filemtime('data/home.html'))) { ob_end_clean(); return false; };
 // checking for modification in file:data/template.html
 if (!("1421521423" == filemtime('data/template.html'))) { ob_end_clean(); return false; };?><!DOCTYPE html>
 <html><head>

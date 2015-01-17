@@ -58,9 +58,9 @@ $server->setRequest($request);
 // Set demo routes
 $server->setHome('\Blog\Controller\Welcome@doIndex');
 $server->addRoute('/^\/([0-9]+)$/', '\Blog\Controller\Welcome@doPost');
-$server->addRoute('/^\/login$/', '\Blog\Controller\AdminController@showAuthForm');
-$server->addRoute('/^\/login\/submit$/', '\Blog\Controller\AdminController@doLogin');
-$server->addRoute('/^\/logout$/', '\Blog\Controller\AdminController@doLogout');
+$server->addRoute('/^\/login$/', '\Blog\Controller\Auth@showAuthForm');
+$server->addRoute('/^\/login\/submit$/', '\Blog\Controller\Auth@doLogin');
+$server->addRoute('/^\/logout$/', '\Blog\Controller\Auth@doLogout');
 $server->addRoute('/^\/admin$/', '\Blog\Controller\AdminController@doIndex');
 $server->addRoute('/^\/admin\/edit\/([0-9]+)$/', '\Blog\Controller\AdminController@doPostEdit');
 $server->addRoute('/^\/admin\/save\/([0-9]+)$/', '\Blog\Controller\AdminController@doPostSave');
