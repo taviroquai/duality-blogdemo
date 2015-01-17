@@ -29,9 +29,6 @@ class Admin extends Home
 
     /**
      * Load posts into view
-     * 
-     * @param \Duality\Service\Database $database
-     * @param \Duality\Service\Server $server
      */
     public function loadPosts()
     {
@@ -49,8 +46,7 @@ class Admin extends Home
     /**
      * Load post into form
      * 
-     * @param \Duality\Service\Database $database
-     * @param \Duality\Service\Server $server
+     * @param int $id
      */
     public function loadPostForm($id)
     {
@@ -60,6 +56,7 @@ class Admin extends Home
         // Load all posts
         $model = $this->app->call('post');
         $post = $model->loadOrDispense($id);
+        $post['bodyHtmlEntities'] = htmlentities($post['body']);
         
         // Set URLs
         $server = $this->app->call('server');
