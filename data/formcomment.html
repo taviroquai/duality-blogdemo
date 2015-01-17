@@ -1,0 +1,41 @@
+{extends "admin.html"}
+
+{block "content"}
+    
+    {if $formComment}
+    <div class="row">
+        <div class="col col-sm-12 col-md-12 col-lg-6">
+            <h2>{if $formComment.id}Edit{else}Create{/if} Post</h2>
+            <form method="post" action="{$saveUrl}" id="postform">
+                
+                <input name="id" value="{$formComment.id}" type="hidden" />
+                <input name="id_posts" value="{$formComment.id_posts}" type="hidden" />
+                
+                <div class="form-group {if $errors.comment}has-error{/if}">
+                    <label>Comment</label>
+                    <textarea class="form-control" name="comment" 
+                           placeholder="Insert comment...">{$formComment.comment}</textarea>
+                    {if $errors.comment}
+                    <span class="help-block">{$errors.comment}</span>
+                    {/if}
+                </div>
+                
+                <div class="form-group">
+                    <label>Published</label>
+                    <label class="radio-inline">
+                        <input type="radio" name="published" value="0" {if !$formComment.published}checked{/if}> No
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="published" value="1" {if $formComment.published}checked{/if}> Yes
+                    </label>
+                </div>
+                
+                <div class="form-group">
+                    <button class="btn btn-primary">Send</button>
+                </div>
+            </form> 
+        </div>
+    </div>
+    {/if}
+    
+{/block}

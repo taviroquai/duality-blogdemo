@@ -73,6 +73,30 @@ extends Controller
 	}
     
     /**
+	 * Save comment
+	 * 
+	 * @param \Duality\Structure\Http\Request  $req    The HTTP request
+	 * @param \Duality\Structure\Http\Response $res    The HTTP response
+     * @param array                            $params The uri params
+	 */
+	public function doCommentSave(Request &$req, Response &$res, $params = array())
+	{        
+		// Default redirect
+        $location = '/'. (int) $req->getParam('id_posts');
+        
+        // Save post
+        $model = $this->app->call('comment');
+        $data = $req->getParams();
+        $data['created_at'] = date('Y-m-d');
+        $data['published'] = 1;
+        $model->save($data);
+        
+		// Set response
+        $server = $this->app->call('server');
+		$res = $server->createRedirect($location);
+	}
+    
+    /**
 	 * Run request to get 404
 	 * 
 	 * @param \Duality\Structure\Http\Request  $req    The HTTP request

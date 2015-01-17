@@ -75,8 +75,23 @@ class Home
             return false;
         }
         
+        // Load comments
+        $model = $this->app->call('comment');
+        $form = $model->loadOrDispense(0);
+        $comments = $model->loadPostComments($id);
+        
+        // fix comments breaklines
+        foreach ($comments as &$item) {
+            $item['comment'] = nl2br($item['comment']);
+        }
+        
+        
         // Set post
+        $server = $this->app->call('server');
         $this->data->assign('post', $post);
+        $this->data->assign('saveUrl', $server->createUrl('/comment/save'));
+        $this->data->assign('formComment', $form);
+        $this->data->assign('comments', $comments);
         return true;
     }
     

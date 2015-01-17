@@ -191,7 +191,6 @@ else {
                       </div>
 
                       <div id="editor" style="overflow:scroll; max-height:300px"><?php echo $this->scope["formPost"]["body"];?></div>
-                    </div>
                 </div>
                 
                 <div class="form-group">
@@ -218,6 +217,67 @@ else {
         });
         
     </script>
+    <?php 
+}?>
+
+    
+    <?php if ((isset($this->scope["comments"]) ? $this->scope["comments"] : null)) {
+?>
+
+    <div class="row">
+        <div class="col col-sm-12 col-md-12 col-lg-6">
+            <h2>Manage Comments</h2>
+            <table class="table" id="posts">
+                <thead>
+                    <tr>
+                        <td>#</td>
+                        <td>Created</td>
+                        <td>Published</td>
+                        <td>Options</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
+$_fh0_data = (isset($this->scope["comments"]) ? $this->scope["comments"] : null);
+if ($this->isTraversable($_fh0_data) == true)
+{
+	foreach ($_fh0_data as $this->scope['item'])
+	{
+/* -- foreach start output */
+?>
+
+                    <tr>
+                        <td><?php echo $this->scope["item"]["id"];?></td>
+                        <td><?php echo $this->scope["item"]["created_at"];?></td>
+                        <td>
+                            <?php if ((isset($this->scope["item"]["published"]) ? $this->scope["item"]["published"]:null)) {
+?>
+
+                            <span class="glyphicon glyphicon-check"></span>
+                            <?php 
+}
+else {
+?>
+
+                            <span class="glyphicon glyphicon-unchecked"></span>
+                            <?php 
+}?>
+
+                        </td>
+                        <td>
+                            <a href="<?php echo $this->scope["commentEditUrl"];?>/<?php echo $this->scope["item"]["id"];?>"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a href="<?php echo $this->scope["commentDelUrl"];?>/<?php echo $this->scope["item"]["id"];?>"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    </tr>
+                    <?php 
+/* -- foreach end output */
+	}
+}?>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
     <?php 
 }?>
 

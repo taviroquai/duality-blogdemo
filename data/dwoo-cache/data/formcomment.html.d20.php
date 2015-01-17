@@ -1,6 +1,8 @@
 <?php
 /* template head */
 /* end template head */ ob_start(); /* template body */ ;
+// checking for modification in file:data/admin.html
+if (!("1418181697" == filemtime('data/admin.html'))) { ob_end_clean(); return false; };
 // checking for modification in file:data/template.html
 if (!("1421521423" == filemtime('data/template.html'))) { ob_end_clean(); return false; };?><!DOCTYPE html>
 <html><head>
@@ -9,10 +11,10 @@ if (!("1421521423" == filemtime('data/template.html'))) { ob_end_clean(); return
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<title><?php echo $this->scope["post"]["title"];?></title>
-<meta name="description" content="<?php echo $this->scope["post"]["resume"];?>">
-<meta name="keywords" content="<?php echo $this->scope["post"]["keywords"];?>">
-<meta name="author" content="<?php echo $this->scope["post"]["author"];?>">
+<title><?php echo $this->scope["title"];?></title>
+<meta name="description" content="<?php echo $this->scope["description"];?>">
+<meta name="keywords" content="<?php echo $this->scope["keywords"];?>">
+<meta name="author" content="<?php echo $this->scope["author"];?>">
 
 <!-- add the bootstrap css framework -->
 <link href="<?php echo $this->scope["url"];?>theme/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -44,75 +46,21 @@ if (!("1421521423" == filemtime('data/template.html'))) { ob_end_clean(); return
 
     
         
-    <div class="row">
-        <div class="col col-sm-12 col-md-12 col-lg-6">
-            <h2><?php echo $this->scope["post"]["title"];?></h2>
-            <div class="well pull-right">
-                <span class="label label-info"><?php echo $this->scope["post"]["author"];?></span>
-                <span class="label label-info"><?php echo $this->scope["post"]["updated_at"];?></span>
-            </div>
-            <div class="clearfix"></div>
-            <div>
-                <?php echo $this->scope["post"]["body"];?>
-
-            </div>
-        </div>
-    </div>
-
-    <?php if ((isset($this->scope["comments"]) ? $this->scope["comments"] : null)) {
-?>
-
-    <div class="row">
-        <div class="col col-sm-12 col-md-12 col-lg-6">
-            <h2>Comments...</h2>
-            
-            <?php 
-$_fh0_data = (isset($this->scope["comments"]) ? $this->scope["comments"] : null);
-if ($this->isTraversable($_fh0_data) == true)
-{
-	foreach ($_fh0_data as $this->scope['item'])
-	{
-/* -- foreach start output */
-?>
-
-                <div class="pull-right"><?php echo $this->scope["item"]["created_at"];?></div>
-                <div class="well">
-                    <?php if ((isset($this->scope["item"]["published"]) ? $this->scope["item"]["published"]:null)) {
-?>
-
-                        <?php echo $this->scope["item"]["comment"];?>
-
-                    <?php 
-}
-else {
-?>
-
-                        <p>Comment not published.</p>
-                    <?php 
-}?>
-
-                </div>
-            <?php 
-/* -- foreach end output */
-	}
-}?>
-
-
-        </div>
-    </div>
-    <?php 
-}?>
-
-
     <?php if ((isset($this->scope["formComment"]) ? $this->scope["formComment"] : null)) {
 ?>
 
     <div class="row">
         <div class="col col-sm-12 col-md-12 col-lg-6">
+            <h2><?php if ((isset($this->scope["formComment"]["id"]) ? $this->scope["formComment"]["id"]:null)) {
+?>Edit<?php 
+}
+else {
+?>Create<?php 
+}?> Post</h2>
             <form method="post" action="<?php echo $this->scope["saveUrl"];?>" id="postform">
                 
                 <input name="id" value="<?php echo $this->scope["formComment"]["id"];?>" type="hidden" />
-                <input name="id_posts" value="<?php echo $this->scope["post"]["id"];?>" type="hidden" />
+                <input name="id_posts" value="<?php echo $this->scope["formComment"]["id_posts"];?>" type="hidden" />
                 
                 <div class="form-group <?php if ((isset($this->scope["errors"]["comment"]) ? $this->scope["errors"]["comment"]:null)) {
 ?>has-error<?php 
@@ -130,9 +78,23 @@ else {
                 </div>
                 
                 <div class="form-group">
+                    <label>Published</label>
+                    <label class="radio-inline">
+                        <input type="radio" name="published" value="0" <?php if (! (isset($this->scope["formComment"]["published"]) ? $this->scope["formComment"]["published"]:null)) {
+?>checked<?php 
+}?>> No
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="published" value="1" <?php if ((isset($this->scope["formComment"]["published"]) ? $this->scope["formComment"]["published"]:null)) {
+?>checked<?php 
+}?>> Yes
+                    </label>
+                </div>
+                
+                <div class="form-group">
                     <button class="btn btn-primary">Send</button>
                 </div>
-            </form>   
+            </form> 
         </div>
     </div>
     <?php 

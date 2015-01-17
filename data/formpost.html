@@ -112,7 +112,6 @@
                       </div>
 
                       <div id="editor" style="overflow:scroll; max-height:300px">{$formPost.body}</div>
-                    </div>
                 </div>
                 
                 <div class="form-group">
@@ -139,6 +138,43 @@
         });
         
     </script>
+    {/if}
+    
+    {if $comments}
+    <div class="row">
+        <div class="col col-sm-12 col-md-12 col-lg-6">
+            <h2>Manage Comments</h2>
+            <table class="table" id="posts">
+                <thead>
+                    <tr>
+                        <td>#</td>
+                        <td>Created</td>
+                        <td>Published</td>
+                        <td>Options</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {foreach $comments item}
+                    <tr>
+                        <td>{$item.id}</td>
+                        <td>{$item.created_at}</td>
+                        <td>
+                            {if $item.published}
+                            <span class="glyphicon glyphicon-check"></span>
+                            {else}
+                            <span class="glyphicon glyphicon-unchecked"></span>
+                            {/if}
+                        </td>
+                        <td>
+                            <a href="{$commentEditUrl}/{$item.id}"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a href="{$commentDelUrl}/{$item.id}"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    </tr>
+                    {/foreach}
+                </tbody>
+            </table>
+        </div>
+    </div>
     {/if}
     
 {/block}

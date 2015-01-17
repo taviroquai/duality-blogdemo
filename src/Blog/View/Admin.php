@@ -53,15 +53,42 @@ class Admin extends Home
         // Set defaults
         $this->template = 'formpost.html';
         
-        // Load all posts
+        // Load post
         $model = $this->app->call('post');
         $post = $model->loadOrDispense($id);
         $post['bodyHtmlEntities'] = htmlentities($post['body']);
+        
+        // Load all comments
+        $model = $this->app->call('comment');
+        $comments = $model->loadPostComments($id);
         
         // Set URLs
         $server = $this->app->call('server');
         $this->data->assign('saveUrl', $server->createUrl('/admin/save/'.$id));
         $this->data->assign('formPost', $post);
+        $this->data->assign('commentEditUrl', $server->createUrl('/admin/comment/edit'));
+        $this->data->assign('commentDelUrl', $server->createUrl('/admin/comment/del'));
+        $this->data->assign('comments', $comments);
+    }
+    
+    /**
+     * Load comment into form
+     * 
+     * @param int $id
+     */
+    public function loadCommentForm($id)
+    {
+        // Set defaults
+        $this->template = 'formcomment.html';
+        
+        // Load post
+        $model = $this->app->call('comment');
+        $comment = $model->loadOrDispense($id);
+        
+        // Set URLs
+        $server = $this->app->call('server');
+        $this->data->assign('saveUrl', $server->createUrl('/admin/comment/save/'.$id));
+        $this->data->assign('formComment', $comment);
     }
     
     /**

@@ -20,5 +20,50 @@
             </div>
         </div>
     </div>
+
+    {if $comments}
+    <div class="row">
+        <div class="col col-sm-12 col-md-12 col-lg-6">
+            <h2>Comments...</h2>
+            
+            {foreach $comments item}
+                <div class="pull-right">{$item.created_at}</div>
+                <div class="well">
+                    {if $item.published}
+                        {$item.comment}
+                    {else}
+                        <p>Comment not published.</p>
+                    {/if}
+                </div>
+            {/foreach}
+
+        </div>
+    </div>
+    {/if}
+
+    {if $formComment}
+    <div class="row">
+        <div class="col col-sm-12 col-md-12 col-lg-6">
+            <form method="post" action="{$saveUrl}" id="postform">
+                
+                <input name="id" value="{$formComment.id}" type="hidden" />
+                <input name="id_posts" value="{$post.id}" type="hidden" />
+                
+                <div class="form-group {if $errors.comment}has-error{/if}">
+                    <label>Comment</label>
+                    <textarea class="form-control" name="comment" 
+                           placeholder="Insert comment...">{$formComment.comment}</textarea>
+                    {if $errors.comment}
+                    <span class="help-block">{$errors.comment}</span>
+                    {/if}
+                </div>
+                
+                <div class="form-group">
+                    <button class="btn btn-primary">Send</button>
+                </div>
+            </form>   
+        </div>
+    </div>
+    {/if}
     
 {/block}

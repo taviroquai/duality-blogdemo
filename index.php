@@ -7,6 +7,7 @@ $config = include_once('./config/app.php');
 use Duality\App;
 use Blog\Model\MyUser;
 use Blog\Model\Post;
+use Blog\Model\Comment;
 
 // Create application container
 $app = new App(dirname(__FILE__), $config);
@@ -16,6 +17,13 @@ $app = new App(dirname(__FILE__), $config);
  */
 $app->register('post', function() use ($app) {
     return new Post($app);
+});
+
+/**
+ * Register comment model
+ */
+$app->register('comment', function() use ($app) {
+    return new Comment($app);
 });
 
 /**
@@ -57,6 +65,10 @@ $server->addRoute('/^\/admin$/', '\Blog\Controller\AdminController@doIndex');
 $server->addRoute('/^\/admin\/edit\/([0-9]+)$/', '\Blog\Controller\AdminController@doPostEdit');
 $server->addRoute('/^\/admin\/save\/([0-9]+)$/', '\Blog\Controller\AdminController@doPostSave');
 $server->addRoute('/^\/admin\/del\/([0-9]+)$/', '\Blog\Controller\AdminController@doPostDel');
+$server->addRoute('/^\/admin\/comment\/edit\/([0-9]+)$/', '\Blog\Controller\AdminController@doCommentEdit');
+$server->addRoute('/^\/admin\/comment\/save\/([0-9]+)$/', '\Blog\Controller\AdminController@doCommentSave');
+$server->addRoute('/^\/admin\/comment\/del\/([0-9]+)$/', '\Blog\Controller\AdminController@doCommentDel');
+$server->addRoute('/^\/comment\/save$/', '\Blog\Controller\Welcome@doCommentSave');
 $server->addRoute('/^\/notfound$/', '\Blog\Controller\Welcome@doNotFound');
 
 // Tell server to execute services

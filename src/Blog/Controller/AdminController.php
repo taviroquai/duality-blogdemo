@@ -232,4 +232,84 @@ extends Base
         $server = $this->app->call('server');
 		$res = $server->createRedirect('/admin');
 	}
+    
+    /**
+	 * Edit comment
+	 * 
+	 * @param \Duality\Structure\Http\Request  $req    The HTTP request
+	 * @param \Duality\Structure\Http\Response $res    The HTTP response
+     * @param array                            $params The uri params
+	 */
+	public function doCommentEdit(Request &$req, Response &$res, $params = array())
+	{
+        // Check valid user
+        if (!$this->validateUser($res)) {
+            return $res;
+        }
+        
+		// Load form data
+        $this->view->loadCommentForm($params[0]);
+        
+		// Set response
+		$res->setContent($this->view->render());
+	}
+    
+    /**
+	 * Save comment
+	 * 
+	 * @param \Duality\Structure\Http\Request  $req    The HTTP request
+	 * @param \Duality\Structure\Http\Response $res    The HTTP response
+     * @param array                            $params The uri params
+	 */
+	public function doCommentSave(Request &$req, Response &$res, $params = array())
+	{
+        // Check valid user
+        if (!$this->validateUser($res)) {
+            return $res;
+        }
+        
+		// Default redirect
+        $location = '/admin/edit/' . (int) $req->getParam('id_posts');
+        
+        // Save post
+        $model = $this->app->call('comment');
+        if (!$model->save($req->getParams())) {
+            $location = '/admin/comment/edit/'. (int) $req->getParam('id');
+        }
+        
+		// Set response
+        $server = $this->app->call('server');
+		$res = $server->createRedirect($location);
+	}
+    
+    /**
+	 * Delete comment
+	 * 
+	 * @param \Duality\Structure\Http\Request  $req    The HTTP request
+	 * @param \Duality\Structure\Http\Response $res    The HTTP response
+     * @param array                            $params The uri params
+	 */
+	public function doCommentDel(Request &$req, Response &$res, $params = array())
+	{
+        // Check valid user
+        if (!$this->validateUser($res)) {
+            return $res;
+        }
+        
+        // Default redirect
+        $redirect = '/admin';
+        
+        // Delete post
+        $model = $this->app->call('comment');
+        $comment = $model->loadById($params[0]);
+        if ($comment) {
+            $id_posts = $comment['id_posts'];
+            $model->delete($comment['id']);
+            $redirect = '/admin/edit/' . (int) $id_posts;
+        }
+        
+		// Set response
+        $server = $this->app->call('server');
+		$res = $server->createRedirect($redirect);
+	}
 }
