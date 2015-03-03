@@ -7,7 +7,7 @@
         }
     ],
     "require": {
-    	"taviroquai/duality": ">=1.0.0",
+    	"taviroquai/duality": ">=1.0.4",
         "dwoo/dwoo": "dev-beta"
     }
 }

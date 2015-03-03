@@ -2,7 +2,7 @@
 /* template head */
 /* end template head */ ob_start(); /* template body */ ;
 // checking for modification in file:data/template.html
-if (!("1421521423" == filemtime('data/template.html'))) { ob_end_clean(); return false; };?><!DOCTYPE html>
+if (!("1425359482" == filemtime('data/template.html'))) { ob_end_clean(); return false; };?><!DOCTYPE html>
 <html><head>
 
 <meta charset="utf-8" />
